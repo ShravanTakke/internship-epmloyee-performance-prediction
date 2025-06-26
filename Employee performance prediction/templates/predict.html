@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Predict Productivity</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            padding: 50px;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+        }
+        form {
+            width: 400px;
+            margin: 0 auto;
+        }
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .result {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #4CAF50;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h2>Enter Details Below</h2>
+    <form method="POST" action="/predict">
+        {% for feature in features %}
+            <input type="text" name="{{ feature }}" placeholder="{{ feature.replace('_', ' ').title() }}" required>
+        {% endfor %}
+        <input type="submit" value="Submit">
+    </form>
+
+    {% if result is defined %}
+        <div class="result">
+            Predicted Productivity: {{ result }}
+        </div>
+    {% endif %}
+
+    <a href="/">Back to Home</a>
+</body>
+</html>
