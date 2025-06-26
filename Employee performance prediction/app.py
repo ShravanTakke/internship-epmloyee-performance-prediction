@@ -16,16 +16,18 @@ def home():
 def about():
     return render_template("about.html")
 
-@app.route('/predict')
+@app.route('/predict', methods=["GET", "POST"])
 def predict():
+    if request.method == "POST":
+        try:
+            inputs = [float(request.form[feature]) for feature in features]
+            df = pd.DataFrame([inputs], columns=features)
+            result = model.predict(df)[0]
+            return render_template("submit.html", result=round(result, 4))
+        except Exception as e:
+            return f"Error: {str(e)}"
     return render_template("predict.html", features=features)
-
-@app.route('/submit', methods=["POST"])
-def submit():
-    inputs = [float(request.form[feature]) for feature in features]
-    df = pd.DataFrame([inputs], columns=features)
-    result = model.predict(df)[0]
-    return render_template("submit.html", result=round(result, 4))
 
 if __name__ == '__main__':
     app.run(debug=True)
+
