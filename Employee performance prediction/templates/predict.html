@@ -50,6 +50,8 @@
 </head>
 <body>
     <h2>Enter Details Below</h2>
+
+    <!-- Updated method and action -->
     <form method="POST" action="/predict">
         {% for feature in features %}
             <input type="text" name="{{ feature }}" placeholder="{{ feature.replace('_', ' ').title() }}" required>
